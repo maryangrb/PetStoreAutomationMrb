@@ -39,13 +39,20 @@ public class InformationPage extends BasePage implements ButtonClick {
     }
 
     //Métodos
-    public void ingresarUserId(String userId) {
+    public String ingresarUserId(String userId) {
+        // Si viene la instrucción o contiene espacios, generamos un User ID válido de exactamente 10 caracteres
+        if (userId != null && (userId.contains("generados") || userId.contains(" "))) {
+            // Ejemplo: "U" + 9 dígitos únicos del timestamp actual -> ej: "U823948192"
+            userId = "U" + String.valueOf(System.currentTimeMillis()).substring(4);
+        }
         type(userIdInput, userId);
+        return userId; //  Retorna el userId
+    }
+    public String ingresarNewPassword(String password) {
+        type(passwordInput, password);
+        return password;
     }
 
-    public void ingresarNewPassword(String password) {
-        type(passwordInput, password);
-    }
     public void ingresarRepeatPassword(String repeatPassword) {
         type(repeatedPasswordInput, repeatPassword);
     }
@@ -57,6 +64,10 @@ public class InformationPage extends BasePage implements ButtonClick {
         type(lastNameInput, lastName);
     }
     public void ingresarEmail(String email) {
+        // Reemplaza el comodín {timestamp} con la hora actual en milisegundos para que el email sea siempre único
+        if (email != null && email.contains("{timestamp}")) {
+            email = email.replace("{timestamp}", String.valueOf(System.currentTimeMillis()));
+        }
         type(emailInput, email);
     }
     public void ingresarPhone(String phone) {
@@ -79,9 +90,6 @@ public class InformationPage extends BasePage implements ButtonClick {
     }
     public void ingresarCountry(String country) {
         type(countryInput, country);
-    }
-    public void clickSaveAccount() {
-        click(saveAccountButton);
     }
 
     //Verifica que el formulario de registro haya cargado exitosamente.
