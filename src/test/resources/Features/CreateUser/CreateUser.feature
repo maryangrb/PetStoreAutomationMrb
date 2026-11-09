@@ -17,24 +17,25 @@ Feature: Registro de Nueva Cuenta de Usuario (Sign Up)
   Scenario: TC-SIGNUP-01 - Registro exitoso con valores por defecto en preferencias de perfil
     When completa el formulario con los siguientes datos:
       | Campo           | Valor                                      |
-      | User ID         | 67846y954                                  |
+      | User ID         | U + 9 caracteres alfanuméricos generados   |
       | New password    | P@ssw0rd2026!+                             |
       | Repeat password | P@ssw0rd2026!+                             |
       | First name      | Carlos                                     |
       | Last name       | Tester                                     |
-      | Email           | qa_user_@testpetstore.com                  |
+      | Email           | qa_user_{timestamp}@testpetstore.com       |
       | Phone           | +123456789                                 |
       | Address 1       | Av. 18 de Julio 123                        |
       | City            | Montevideo                                 |
       | State           | Montevideo                                 |
-      | Zip             | 11100                                     |
-      | Country         | Uruguay                                   |
+      | Zip             | 11100                                      |
+      | Country         | Uruguay                                    |
     And deja las preferencias de perfil con sus valores por defecto
     And da click en "Save account information"
     Then el sistema redirige a la página de inicio "/catalog"
-    And la página de inicio muestra el texto "docs"
+    And la página de inicio muestra la imagen "Dogs"
     When da click en "Sign in"
     And ingresa el User ID registrado
     And ingresa la contraseña registrada
     And envía el formulario de inicio de sesión
-    Then la página de inicio muestra el texto "docs"
+    Then la página de inicio muestra la imagen "Dogs"
+    And la página de inicio muestra My Account and Sign Out buttons
